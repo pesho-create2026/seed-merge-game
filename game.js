@@ -57,7 +57,12 @@ function emptyBoard() {
 function setupLevelList() {
   levelList.innerHTML = levels
     .slice(0, 6)
-    .map((level) => `<li><img class="mini" src="${level.image}" alt="${level.name}"></li>`)
+    .map((level, index) => {
+      const item = `<li class="level-${index + 1}"><img class="mini" src="${level.image}" alt="${level.name}"></li>`;
+      const arrow = index !== 2 && index !== 5 ? '<li class="growth-arrow" aria-hidden="true">→</li>' : "";
+      const rowBreak = index === 2 ? '<li class="growth-row-break" aria-hidden="true"></li>' : "";
+      return `${item}${arrow}${rowBreak}`;
+    })
     .join("");
 }
 

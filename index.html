@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Seed Merge</title>
+    <title>紫陽花の種(2048系パズル)</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div id="hydrangeaBackdrop" class="hydrangea-backdrop" aria-hidden="true"></div>
-    <main class="app" aria-label="Seed Merge">
+    <main class="app" aria-label="紫陽花の種">
       <section class="topbar">
         <div>
-          <p class="kicker">4x4 seed puzzle</p>
-          <h1>Seed Merge</h1>
+          <p class="kicker">2,048系パズル</p>
+          <div class="title-row">
+            <h1>紫陽花の種</h1>
+            <a class="help-link" href="#growthGuide" aria-label="成長過程ヒントへ移動">?</a>
+          </div>
         </div>
         <div class="scores" aria-label="スコア">
           <div class="score-box">
@@ -65,8 +68,15 @@
               <strong id="pendingSeedCount">0</strong>
             </div>
           </div>
-          <div class="levels" aria-label="成長レベル">
+          <div id="growthGuide" class="levels" aria-label="アジサイの成長過程ヒント">
             <ol id="levelList"></ol>
+            <div class="bloom-rule" aria-label="花同士が重なると盤面から消えて背景に増えます">
+              <span class="rule-tile level-6"><img src="image/flower.png" alt="花"></span>
+              <span class="rule-symbol">+</span>
+              <span class="rule-tile level-6"><img src="image/flower.png" alt="花"></span>
+              <span class="rule-symbol">→</span>
+              <span class="rule-backdrop vanish-mark"><img src="image/flower.png" alt="背景の紫陽花"></span>
+            </div>
           </div>
         </aside>
       </section>
