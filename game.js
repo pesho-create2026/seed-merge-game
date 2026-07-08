@@ -17,10 +17,10 @@ const hydrangeaBackdropEl = document.querySelector("#hydrangeaBackdrop");
 const directionPadEl = document.querySelector(".direction-pad");
 const movesEl = document.querySelector("#moves");
 const scoreEl = document.querySelector("#score");
+const bestLabelEl = document.querySelector("#bestLabel");
 const bestEl = document.querySelector("#best");
 const restartButton = document.querySelector("#restart");
 const practiceModeEl = document.querySelector("#practiceMode");
-const bestMoveHintEl = document.querySelector("#bestMoveHint");
 const customSeedModeEl = document.querySelector("#customSeedMode");
 const seedPlacementHintEl = document.querySelector("#seedPlacementHint");
 const pendingSeedCountEl = document.querySelector("#pendingSeedCount");
@@ -34,6 +34,7 @@ let score = 0;
 let bloomCount = 0;
 let renderedBloomCount = -1;
 let best = Number(localStorage.getItem(storageKey) || 0);
+let bestEligible = true;
 let mergedCells = new Set();
 let pendingSeeds = 0;
 let touchStart = null;
@@ -75,6 +76,7 @@ function startGame() {
   moves = 0;
   score = 0;
   bloomCount = 0;
+  bestEligible = !practiceModeEl.checked && !customSeedModeEl.checked;
   mergedCells = new Set();
   pendingSeeds = customSeedModeEl.checked ? startTiles : 0;
   overlayEl.hidden = true;
@@ -137,10 +139,9 @@ function render() {
 
   movesEl.textContent = moves;
   scoreEl.textContent = score;
-  bestEl.textContent = best;
+  renderBestDisplay();
   renderHydrangeaBackdrop();
   renderSeedPlacementHint();
-  renderBestMoveHint();
 }
 
 function move(direction) {
@@ -423,10 +424,11 @@ function canMove() {
 
 function showGameOver() {
   overlayEl.hidden = false;
-  renderBestMoveHint();
+  renderBestDisplay();
 }
 
 function updateBest() {
+  if (!bestEligible || practiceModeEl.checked || customSeedModeEl.checked) return;
   if (score <= best) return;
   best = score;
   localStorage.setItem(storageKey, String(best));
@@ -492,16 +494,27 @@ function getBloomRotation(index) {
   return [-14, 10, -6, 16, -20, 7][index % 6];
 }
 
-function renderBestMoveHint() {
-  if (isPlacingSeed() || !practiceModeEl.checked || !canMove()) {
-    bestMoveHintEl.hidden = true;
-    bestMoveHintEl.textContent = "";
+function renderBestDisplay() {
+  if (customSeedModeEl.checked) {
+    bestLabelEl.textContent = "";
+    bestEl.textContent = "";
     return;
   }
 
-  const bestMove = findBestMove();
-  bestMoveHintEl.hidden = !bestMove;
-  bestMoveHintEl.textContent = bestMove ? directionArrows[bestMove] : "";
+  if (practiceModeEl.checked) {
+    bestLabelEl.textContent = "";
+    if (isPlacingSeed() || !canMove()) {
+      bestEl.textContent = "";
+      return;
+    }
+
+    const bestMove = findBestMove();
+    bestEl.textContent = bestMove ? directionArrows[bestMove] : "";
+    return;
+  }
+
+  bestLabelEl.textContent = "Best";
+  bestEl.textContent = best;
 }
 
 function handleBoardClick(event) {
@@ -673,6 +686,14 @@ function handleDirectionButtonClick(event) {
   move(button.dataset.direction);
 }
 
+function handlePracticeModeChange() {
+  if (practiceModeEl.checked) {
+    bestEligible = false;
+  }
+
+  render();
+}
+
 function handleTouchStart(event) {
   const touch = event.changedTouches[0];
   touchStart = { x: touch.clientX, y: touch.clientY };
@@ -698,7 +719,7 @@ function handleTouchEnd(event) {
 
 restartButton.addEventListener("click", startGame);
 overlayRestart.addEventListener("click", startGame);
-practiceModeEl.addEventListener("change", renderBestMoveHint);
+practiceModeEl.addEventListener("change", handlePracticeModeChange);
 customSeedModeEl.addEventListener("change", startGame);
 window.addEventListener("keydown", handleKey);
 directionPadEl.addEventListener("click", handleDirectionButtonClick);

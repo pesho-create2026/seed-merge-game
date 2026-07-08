@@ -207,7 +207,6 @@ h1 {
   border: 2px solid rgba(255, 255, 255, 0.38);
   border-radius: 8px;
   box-shadow: inset 0 -8px 16px rgba(35, 24, 12, 0.08);
-  animation: appear 140ms ease-out;
 }
 
 .animation-layer {
@@ -317,22 +316,6 @@ h1 {
   width: 20px;
   height: 20px;
   accent-color: var(--accent);
-}
-
-.best-move-hint {
-  display: grid;
-  place-items: center;
-  min-height: 92px;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent-dark);
-  font-size: clamp(3.2rem, 12vw, 5.5rem);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.best-move-hint[hidden] {
-  display: none;
 }
 
 .seed-placement-hint {
