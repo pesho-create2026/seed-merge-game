@@ -513,6 +513,80 @@ h1 {
   font-weight: 900;
 }
 
+.instructions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(251, 248, 240, 0.86);
+  box-shadow: 0 10px 28px rgba(23, 38, 58, 0.08);
+}
+
+.instruction-block {
+  min-width: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(38, 79, 138, 0.12);
+}
+
+.instruction-block:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.instruction-block h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 9px;
+  color: var(--accent-dark);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.instruction-block h2::before {
+  content: "";
+  width: 5px;
+  height: 1.25em;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 7px 0 0 var(--accent-soft);
+}
+
+.instruction-block p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.instruction-block p + p {
+  margin-top: 2px;
+}
+
+.mode-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.mode-item {
+  padding: 12px;
+  border: 1px solid rgba(38, 79, 138, 0.14);
+  border-radius: 8px;
+  background: rgba(219, 229, 244, 0.32);
+}
+
+.mode-item h3 {
+  margin: 0 0 6px;
+  color: var(--accent-dark);
+  font-size: 0.96rem;
+  line-height: 1.25;
+}
+
 .overlay {
   position: absolute;
   inset: 0;
@@ -609,5 +683,9 @@ h1 {
 
   .levels .growth-arrow {
     width: 20px;
+  }
+
+  .instructions {
+    padding: 14px;
   }
 }

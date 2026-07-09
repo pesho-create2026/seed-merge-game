@@ -495,14 +495,8 @@ function getBloomRotation(index) {
 }
 
 function renderBestDisplay() {
-  if (customSeedModeEl.checked) {
-    bestLabelEl.textContent = "";
-    bestEl.textContent = "";
-    return;
-  }
-
   if (practiceModeEl.checked) {
-    bestLabelEl.textContent = "";
+    bestLabelEl.textContent = "推奨手";
     if (isPlacingSeed() || !canMove()) {
       bestEl.textContent = "";
       return;
@@ -510,6 +504,12 @@ function renderBestDisplay() {
 
     const bestMove = findBestMove();
     bestEl.textContent = bestMove ? directionArrows[bestMove] : "";
+    return;
+  }
+
+  if (customSeedModeEl.checked) {
+    bestLabelEl.textContent = "";
+    bestEl.textContent = "";
     return;
   }
 
